@@ -1,6 +1,6 @@
 package com.mycompany.petclinic;
 
-public class Pasien {
+public abstract class Pasien {
     private String nama;
     private String jenis;
     private String gender;
@@ -88,4 +88,6 @@ public class Pasien {
     public void caraPerawatan() {
         System.out.println("Pasien akan mendapatkan pemeriksaan dan perawatan sesuai prosedur klinik hewan");
     }
+    
+    public abstract void biayaPenangananLanjut();
 }

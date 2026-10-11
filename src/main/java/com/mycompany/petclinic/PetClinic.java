@@ -127,6 +127,15 @@ public class PetClinic {
                             daftarPasien[i].tampilkanInfo();
                             System.out.println();
                             daftarPasien[i].caraPerawatan();
+                            
+                            daftarPasien[i].biayaPenangananLanjut();
+                            
+                            if (daftarPasien[i] instanceof TindakanLanjut) {
+                                TindakanLanjut tindakan = (TindakanLanjut) daftarPasien[i];
+                                tindakan.prosesVaksinasi();
+                                tindakan.prosesOperasi();
+                            }
+                            System.out.println();
                         }
                     }
 
