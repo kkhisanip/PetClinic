@@ -10,7 +10,8 @@ public abstract class Pasien {
     
     public static int totalPasienBerhasilDibuat = 0;
     
-    public Pasien(String nama, String jenis, String gender,  String keluhan, int umur, double berat) {
+    public Pasien(String nama, String jenis, String gender, String keluhan, int umur, double berat) throws Exception {
+        if (umur < 0 || berat <= 0.0) throw new Exception("Data pasien tidak valid");
         this.nama = nama;
         this.jenis = jenis;
         this.gender = gender;
