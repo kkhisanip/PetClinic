@@ -1,61 +1,45 @@
 package com.mycompany.petclinic;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class PetClinic {
 
-    public static void cariPasien(String nama, ArrayList<Pasien> daftarPasien) throws PasienTidakDitemukanException {
-        System.out.println("Mencari pasien dengan Nama: " + nama);
-        boolean ditemukan = false;
-        for (int i = 0; i < daftarPasien.size(); i++) {
-            if (daftarPasien.get(i).getNama().equalsIgnoreCase(nama)) {
-                System.out.print("- Ditemukan: ");
-                daftarPasien.get(i).tampilkanInfo();
-                System.out.println();
-                ditemukan = true;
-            }
-        }
-        if (!ditemukan)
-            throw new PasienTidakDitemukanException("Gagal: Pasien dengan nama '" + nama + "' tidak ditemukan di sistem!");
-    }
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        
-        ArrayList<Pasien> daftarPasien = new ArrayList<>();
-        HashMap<String, String> dataOwner = new HashMap<>();
+        KlinikHewan klinikMyVet = new KlinikHewan("Pet Clinic - MyVet");
+
+        klinikMyVet.bukaKlinik();
 
         try {
-            daftarPasien.add(new Mamalia("Shasha", "Anjing Poodle", "Betina", "Flu ringan", 12, 4.5, "Bulu berlapis tunggal"));
-            daftarPasien.add(new Reptil("Dyo", "Kura-kura Darat", "Jantan", "Cakang sedikit retak", 24, 7.3, "Terestrial"));
-            daftarPasien.add(new Unggas("Shone", "Angsa Putih", "Jantan", "Paruh tergores", 8, 2.4, "Tidak bisa terbang"));
-            daftarPasien.add(new Pisces("Noe", "Ikan Arwana", "Betina", "Sirip terluka", 5, 0.9, "Air Tawar"));
-            
-            dataOwner.put("OWN-001", "Jennifer Huh");
-            dataOwner.put("OWN-002", "Lee Wonhee");
-            dataOwner.put("OWN-003", "Megan Skiendiel");
-            dataOwner.put("OWN-004", "Yihani");
+            klinikMyVet.tambahPasien(new Mamalia("shasha", "anjing poodle", "betina", "flu ringan", 12, 4.5, "bulu tunggal"));
+            klinikMyVet.tambahPasien(new Reptil("dyo", "kura-kura darat", "jantan", "cakang sedikit retak", 24, 7.3, "terestrial"));
+            klinikMyVet.tambahPasien(new Unggas("shone", "angsa putih", "jantan", "paruh tergores", 8, 2.4, "tidak bisa terbang"));
+            klinikMyVet.tambahPasien(new Pisces("noe", "ikan arwana", "betina", "sirip terluka", 5, 0.9, "air tawar"));
+
+            klinikMyVet.tambahOwner(new Owner("ow-1", "jennifer huh"));
+            klinikMyVet.tambahOwner(new Owner("ow-2", "lee wonhee"));
+            klinikMyVet.tambahOwner(new Owner("ow-3", "megan skiendiel"));
+            klinikMyVet.tambahOwner(new Owner("ow-4", "yihani"));
         } catch (Exception e) {
             System.out.println("Gagal inisialisasi data awal: " + e.getMessage());
         }
 
         boolean isRunning = true;
 
-        System.out.println("==============================");
-        System.out.println(" Selamat Datang di Pet Clinic ");
-        System.out.println("==============================");
+        System.out.println("=====================================");
+        System.out.println(" Selamat Datang di Pet Clinic - MyVet ");
+        System.out.println("=====================================");
 
         while (isRunning) {
-            System.out.println("\nMenu Utama");
+            System.out.println("\nMenu Utama:");
             System.out.println("1. Tambah Pasien");
             System.out.println("2. Lihat Daftar Pasien");
-            System.out.println("3. Cari Pasien (Demo Custom Exception)");
-            System.out.println("4. Manajemen Owner (Demo HashMap)");
-            System.out.println("5. Keluar");
-            System.out.print("Pilih Menu (1-5): ");
+            System.out.println("3. Cari Pasien (Custom Exception)");
+            System.out.println("4. Manajemen Owner");
+            System.out.println("5. Simulasi Perawatan (Demo Association)");
+            System.out.println("6. Keluar");
+            System.out.print("Pilih: ");
 
             try {
                 int pilihan = scanner.nextInt();
@@ -68,66 +52,45 @@ public class PetClinic {
                         System.out.println("2. Reptil");
                         System.out.println("3. Unggas");
                         System.out.println("4. Pisces");
-                        System.out.print("Pilih (1-4): ");
+                        System.out.print("Pilih: ");
                         int kategori = scanner.nextInt();
                         scanner.nextLine();
 
-                        System.out.print(" Masukan Nama Hewan: ");
-                        String namaHewan = scanner.nextLine();
-                        System.out.print(" Masukan Jenis Hewan: ");
-                        String jenisHewan = scanner.nextLine();
-                        System.out.print(" Masukan Gender Hewan: ");
-                        String genderHewan = scanner.nextLine();
-                        System.out.print(" Masukan Keluhan Hewan: ");
-                        String keluhanHewan = scanner.nextLine();
-                        System.out.print(" Masukan Umur Hewan: ");
-                        int umurHewan = scanner.nextInt();
-                        System.out.print(" Masukan Berat Hewan: ");
-                        double beratHewan = scanner.nextDouble();
+                        System.out.print("Masukkan Nama Hewan: ");
+                        String nama = scanner.nextLine();
+                        System.out.print("Masukkan Jenis Hewan: ");
+                        String jenis = scanner.nextLine();
+                        System.out.print("Masukkan Gender Hewan: ");
+                        String gender = scanner.nextLine();
+                        System.out.print("Masukkan Keluhan Hewan: ");
+                        String keluhan = scanner.nextLine();
+                        System.out.print("Masukkan Umur Hewan: ");
+                        int umur = scanner.nextInt();
+                        System.out.print("Masukkan Berat Hewan: ");
+                        double berat = scanner.nextDouble();
                         scanner.nextLine();
 
                         if (kategori == 1) {
-                            System.out.print("Masukan Tipe Bulu: ");
-                            String tipeBulu = scanner.nextLine();
-                            daftarPasien.add(new Mamalia(namaHewan, jenisHewan, genderHewan, keluhanHewan, umurHewan, beratHewan, tipeBulu));
+                            System.out.print("Masukkan Tipe Bulu: ");
+                            klinikMyVet.tambahPasien(new Mamalia(nama, jenis, gender, keluhan, umur, berat, scanner.nextLine()));
                         } else if (kategori == 2) {
-                            System.out.print("Masukan Tipe Habitat: ");
-                            String tipeHabitat = scanner.nextLine();
-                            daftarPasien.add(new Reptil(namaHewan, jenisHewan, genderHewan, keluhanHewan, umurHewan, beratHewan, tipeHabitat));
+                            System.out.print("Masukkan Tipe Habitat: ");
+                            klinikMyVet.tambahPasien(new Reptil(nama, jenis, gender, keluhan, umur, berat, scanner.nextLine()));
                         } else if (kategori == 3) {
-                            System.out.print("Masukan Tipe Terbang: ");
-                            String tipeTerbang = scanner.nextLine();
-                            daftarPasien.add(new Unggas(namaHewan, jenisHewan, genderHewan, keluhanHewan, umurHewan, beratHewan, tipeTerbang));
+                            System.out.print("Masukkan Tipe Terbang: ");
+                            klinikMyVet.tambahPasien(new Unggas(nama, jenis, gender, keluhan, umur, berat, scanner.nextLine()));
                         } else if (kategori == 4) {
-                            System.out.print("Masukan Tipe Air: ");
-                            String tipeAir = scanner.nextLine();
-                            daftarPasien.add(new Pisces(namaHewan, jenisHewan, genderHewan, keluhanHewan, umurHewan, beratHewan, tipeAir));
+                            System.out.print("Masukkan Tipe Air: ");
+                            klinikMyVet.tambahPasien(new Pisces(nama, jenis, gender, keluhan, umur, berat, scanner.nextLine()));
                         } else {
-                            System.out.println("Kategori hewan tidak valid!");
+                            System.out.println("Kategori hewan tidak valid");
                         }
-                        System.out.println("Sukses, pasien berhasil ditambahkan! (Total Pasien: " + daftarPasien.size() + ")");
+                        System.out.println("Sukses, pasien berhasil ditambahkan (Total Pasien: " + klinikMyVet.getJumlahPasien() + ")");
                     }
 
                     case 2 -> {
-                        System.out.println("\n-- Daftar Pasien di Pet Clinic --");
-                        if (daftarPasien.isEmpty()) {
-                            System.out.println("Belum ada pasien yang tersimpan");
-                        } else {
-                            for (int i = 0; i < daftarPasien.size(); i++) {
-                                System.out.print((i + 1) + ". ");
-                                daftarPasien.get(i).tampilkanInfo();
-                                System.out.println();
-                                daftarPasien.get(i).caraPerawatan();
-                                daftarPasien.get(i).biayaPenangananLanjut();
-                                
-                                if (daftarPasien.get(i) instanceof TindakanLanjut tindakan) {
-                                    tindakan.prosesVaksinasi();
-                                    tindakan.prosesOperasi();
-                                }
-                                System.out.println();
-                            }
-                        }
-                        System.out.println("\n* Total Pasien Terdaftar (ArrayList size): " + daftarPasien.size());
+                        System.out.println("\n-- Daftar Pasien di Pet Clinic - MyVet --");
+                        klinikMyVet.lihatSemuaPasien();
                     }
 
                     case 3 -> {
@@ -136,63 +99,78 @@ public class PetClinic {
                         String kataKunci = scanner.nextLine();
 
                         try {
-                            cariPasien(kataKunci, daftarPasien);
+                            klinikMyVet.cariPasien(kataKunci);
                         } catch (PasienTidakDitemukanException e) {
                             System.out.println("Peringatan: " + e.getMessage());
-                        } finally {
-                            System.out.println("-> Sesi pencarian selesai dieksekusi.");
                         }
                     }
 
                     case 4 -> {
-                        System.out.println("\n-- Manajemen Owner (HashMap) --");
-                        System.out.println("1. Tambah Owner Baru");
-                        System.out.println("2. Cari Owner via ID");
-                        System.out.println("3. Tampilkan Semua Owner");
-                        System.out.print("Pilih menu (1-3): ");
+                        System.out.println("\n-- Manajemen Owner --");
+                        System.out.println("1. Tambah Owner");
+                        System.out.println("2. Cari Owner");
+                        System.out.println("3. Lihat Semua");
+                        System.out.print("Pilih: ");
                         int menuOwner = scanner.nextInt();
                         scanner.nextLine();
 
                         if (menuOwner == 1) {
-                            System.out.print("Masukkan ID Owner (sebagai Key): ");
-                            String idKey = scanner.nextLine();
-                            System.out.print("Masukkan Nama Owner (sebagai Value): ");
-                            String namaVal = scanner.nextLine();
-                            dataOwner.put(idKey, namaVal);
-                            System.out.println("Berhasil menambahkan data owner!");
+                            System.out.print("Masukkan ID Owner: ");
+                            String id = scanner.nextLine();
+                            System.out.print("Masukkan Nama Owner: ");
+                            String nama = scanner.nextLine();
+                            klinikMyVet.tambahOwner(new Owner(id, nama));
+                            System.out.println("Berhasil menambahkan owner");
                         } else if (menuOwner == 2) {
-                            System.out.print("Masukkan ID yang dicari: ");
-                            String searchId = scanner.nextLine();
-                            if (dataOwner.containsKey(searchId)) {
-                                System.out.println("Ditemukan! Nama Owner: " + dataOwner.get(searchId));
-                            } else {
-                                System.out.println("Owner dengan ID tersebut tidak terdaftar.");
-                            }
+                            System.out.print("ID Owner yg dicari: ");
+                            klinikMyVet.cariOwner(scanner.nextLine());
                         } else if (menuOwner == 3) {
-                            System.out.println("Total Owner Terdaftar: " + dataOwner.size());
-                            for (String keyId : dataOwner.keySet()) {
-                                System.out.println("- ID: " + keyId + " | Nama: " + dataOwner.get(keyId));
-                            }
+                            klinikMyVet.lihatSemuaOwner();
                         } else {
-                            System.out.println("Pilihan menu tidak valid.");
+                            System.out.println("Pilihan tidak valid");
                         }
                     }
 
                     case 5 -> {
-                        System.out.println("Terima kasih telah berobat di Pet Clinic");
+                        System.out.println("\n-- Simulasi Perawatan (Asosiasi) --");
+                        System.out.print("Masukkan ID Owner Pemilik: ");
+                        String inputId = scanner.nextLine();
+                        Owner owner = klinikMyVet.getOwner(inputId);
+
+                        if (owner == null) {
+                            System.out.println("Gagal: Owner belum terdaftar");
+                        } else if (klinikMyVet.getJumlahPasien() == 0) {
+                            System.out.println("Gagal: Belum ada pasien hewan di klinik");
+                        } else {
+                            klinikMyVet.lihatSemuaPasien();
+                            System.out.print("Pilih (1-" + klinikMyVet.getJumlahPasien() + "): ");
+                            int noPasien = scanner.nextInt() - 1;
+                            scanner.nextLine();
+
+                            if (noPasien >= 0 && noPasien < klinikMyVet.getJumlahPasien()) {
+                                Pasien pasienTerpilih = klinikMyVet.getPasienInt(noPasien);
+                                TransaksiPerawatan.prosesPerawatan(owner, pasienTerpilih);
+                            } else {
+                                System.out.println("Nomor pasien tidak valid");
+                            }
+                        }
+                    }
+
+                    case 6 -> {
+                        System.out.println("Terima kasih telah menggunakan Pet Clinic - MyVet");
                         isRunning = false;
                     }
 
-                    default -> System.out.println("Pilihan tidak valid, silahkan tekan angka 1-5.");
+                    default -> System.out.println("Pilihan tidak valid, silahkan tekan angka 1-6");
                 }
 
             } catch (InputMismatchException e) {
-                System.out.println("\n[ERROR INPUT] Input harus berupa angka valid!");
+                System.out.println("\n[ERROR INPUT] Input harus berupa angka valid");
                 scanner.nextLine();
             } catch (Exception e) {
                 System.out.println("\n[ERROR SISTEM] Terjadi kesalahan: " + e.getMessage());
             } finally {
-                System.out.println("-> Blok Finally: Siklus menu sistem berjalan normal.\n");
+                System.out.println("-> Siklus menu sistem berjalan normal\n");
             }
         }
 

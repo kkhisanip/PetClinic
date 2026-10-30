@@ -1,6 +1,10 @@
+com\mycompany\petclinic\KlinikHewan.class
+com\mycompany\petclinic\Owner.class
+com\mycompany\petclinic\RuangPeriksa.class
 com\mycompany\petclinic\Mamalia.class
 com\mycompany\petclinic\Pisces.class
 com\mycompany\petclinic\TindakanLanjut.class
+com\mycompany\petclinic\TransaksiPerawatan.class
 com\mycompany\petclinic\Unggas.class
 com\mycompany\petclinic\Pasien.class
 com\mycompany\petclinic\PasienTidakDitemukanException.class
